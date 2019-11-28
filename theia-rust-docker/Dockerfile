@@ -33,7 +33,7 @@ ENV CARGO_HOME /root/rust/cargo
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > /tmp/sh.rustup.rs && sh /tmp/sh.rustup.rs -y
 
-ARG rust_channel=nightly-2019-08-01
+ARG rust_channel=nightly-2019-11-25
 
 # install language server dependencies for theia
 RUN . /root/rust/cargo/env && rustup toolchain install $rust_channel
