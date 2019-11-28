@@ -9,7 +9,6 @@
     },
     "dependencies": {
         "@theia/core": "next",
-        "@theia/cpp-debug": "*",
         "@theia/editor": "next",
         "@theia/editorconfig": "next",
         "@theia/editor-preview": "next",
@@ -43,12 +42,19 @@
         "@theia/textmate-grammars": "next",
         "@theia/userstorage": "next",
         "@theia/variable-resolver": "next",
-        "@theia/workspace": "next"
+        "@theia/workspace": "next",
+        "@theia/ext-scripts": "*",
+        "@theia/cpp-debug": "next"
+    },
+    "resolutions": {
+        "vscode-languageserver-protocol": "3.15.0-next.9",
+        "vscode-languageserver-types": "3.15.0-next.5",
+        "**/vscode-json-languageserver/**/vscode-languageserver": "6.0.0-next.1"
     },
     "devDependencies": {
         "@theia/cli": "next"
     },
     "workspaces": [
-      "packages/*"
+        "packages/*"
     ]
 }

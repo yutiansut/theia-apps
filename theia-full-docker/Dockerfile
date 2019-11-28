@@ -98,7 +98,8 @@ RUN curl -sS https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar
     go get -u -v github.com/josharian/impl && \
     go get -u -v github.com/tylerb/gotype-live && \
     go get -u -v github.com/rogpeppe/godef && \
-    go get -u -v golang.org/x/tools/cmd/godoc && \
+    # godoc causing issues ATM, preventing image to build - commenting-out
+    # go get -u -v golang.org/x/tools/cmd/godoc && \
     go get -u -v github.com/zmb3/gogetdoc && \
     go get -u -v golang.org/x/tools/cmd/goimports && \
     go get -u -v sourcegraph.com/sqs/goreturns && \
@@ -118,8 +119,9 @@ RUN apt-get update && apt-get -y install openjdk-8-jdk maven gradle
 # public LLVM PPA, development version of LLVM
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" > /etc/apt/sources.list.d/llvm.list && \
-    apt-get update && apt-get install -y clang-tools-9 && \
-    ln -s /usr/bin/clangd-9 /usr/bin/clangd
+    apt-get update && apt-get install -y clang-tools-10 clangd-10 clang-tidy-10 && \
+    ln -s /usr/bin/clangd-10 /usr/bin/clangd && \
+    ln -s /usr/bin/clang-tidy-10 /usr/bin/clang-tidy
 
 #Python 2
 RUN apt-get update && apt-get install -y python python-pip && \
@@ -180,7 +182,8 @@ ARG GITHUB_TOKEN
 RUN yarn --cache-folder ./ycache && rm -rf ./ycache && \
     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build
 EXPOSE 3000
-ENV SHELL /bin/bash
+ENV SHELL /bin/bash\
+    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins
 
 ENV GOPATH=/home/project
 ENV PATH=$PATH:$GOPATH/bin
