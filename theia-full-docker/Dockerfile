@@ -153,27 +153,28 @@ RUN curl -fsSL https://sh.rustup.rs | sh -s -- -y \
     && rustup component add rls rust-src rust-analysis
     
 
-## User account
-RUN adduser --disabled-password --gecos '' theia && \
-    adduser theia sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers;
+# ## User account
+# RUN adduser --disabled-password --gecos '' theia && \
+#     adduser theia sudo && \
+#     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers;
 
 RUN chmod g+rw /home && \
     mkdir -p /home/project && \
+    mkdir -p /home/theia && \
     mkdir -p /usr/local/cargo && \
     mkdir -p /usr/local/go && \
-    mkdir -p /usr/local/go-packages && \
-    chown -R theia:theia /usr/local/cargo && \
-    chown -R theia:theia /usr/local/go && \
-    chown -R theia:theia /usr/local/go-packages && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
+    mkdir -p /usr/local/go-packages
+#     chown -R theia:theia /usr/local/cargo && \
+#     chown -R theia:theia /usr/local/go && \
+#     chown -R theia:theia /usr/local/go-packages && \
+#     chown -R theia:theia /home/theia && \
+#     chown -R theia:theia /home/project;
 
 #Theia
 ##Needed for node-gyp, nsfw build
 RUN apt-get update && apt-get install -y python build-essential
 
-USER theia
+# USER theia
 ARG version=latest
 WORKDIR /home/theia
 ADD $version.package.json ./package.json
